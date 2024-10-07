@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -59,8 +60,13 @@ void printCapacitor(Capacitor* capacitor,int time){
     }
 }
 
-
-
+void saveCapacitor(Capacitor* capacitor, int time) {
+    ofstream outFile("data.txt");
+    for(int i = 0; i < time; i++) {
+        outFile << setw(8) << left <<  capacitor->time[i] << " | "<<  setw(8) << left << capacitor->voltage[i] << " | "<<  setw(8) << left << capacitor->current[i] << endl; //Format the output string as a table
+    }
+    outFile.close();
+}
 
 int main(int argc, char *argv[]) {
     const double C = 100e-12; // Capacitance
@@ -76,6 +82,7 @@ int main(int argc, char *argv[]) {
     computeCurrent(&C1,V0,R,time); //Compute the current
     computeVoltage(&C1,I0,time);   //Compute the voltage
     printCapacitor(&C1,time);      //print method every 200 steps
+    saveCapacitor(&C1,time);
 
     return 0;
 };
