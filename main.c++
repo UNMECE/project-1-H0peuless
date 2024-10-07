@@ -1,9 +1,7 @@
 #include <string>
 #include <iostream>
-<<<<<<< HEAD
+
 #include <iomanip>
-=======
->>>>>>> 9d3a8a9 (Comment in the code)
 
 using namespace std;
 
