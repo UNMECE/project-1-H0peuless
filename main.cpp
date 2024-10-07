@@ -35,9 +35,8 @@ Capacitor createCapacitor(float dt, float finalTime, double capacitance) {
 }
 
 
-void computeVoltage(Capacitor* capacitor,float V0, float I0, int time) { //Compute the current if the voltage is constant
+void computeVoltage(Capacitor* capacitor, float I0, int time) { //Compute the current if the voltage is constant
     capacitor->voltage[0] = 0;
-    capacitor->current[1] = I0;
     double dt = capacitor->time[1] - capacitor->time[0];
 
     for(int i = 1; i < time; i++){
@@ -45,9 +44,8 @@ void computeVoltage(Capacitor* capacitor,float V0, float I0, int time) { //Compu
     }
 }
 
-void computeCurrent(Capacitor* capacitor,float V0, float I0, float R, int time) { //Compute the current if the voltage is constant
-    capacitor->voltage[0] = V0;
-    capacitor->current[0] = 0;
+void computeCurrent(Capacitor* capacitor,float V0, float R, int time) { //Compute the current if the voltage is constant
+    capacitor->current[0] = V0/R;
     double dt = capacitor->time[1] - capacitor->time[0];
     for(int i = 1; i < time; i++) {
         capacitor->current[i] = capacitor->current[i-1] - (capacitor->current[i-1]/(R*capacitor->C))*dt;
@@ -75,9 +73,9 @@ int main(int argc, char *argv[]) {
 
     Capacitor C1 = createCapacitor(dt,finalTime, C);
 
-    computeCurrent(&C1,V0,I0,R,time); //Compute the current
-    computeVoltage(&C1,V0,I0,time);   //Compute the voltage
-    printCapacitor(&C1,time);         //print method every 200 steps
+    computeCurrent(&C1,V0,R,time); //Compute the current
+    computeVoltage(&C1,I0,time);   //Compute the voltage
+    printCapacitor(&C1,time);      //print method every 200 steps
 
     return 0;
 };
